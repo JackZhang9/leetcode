@@ -19,3 +19,4 @@ class Solution:
             sum += num
             lst.append(sum)
         return lst
+小结：列表添加元素，sum每一次累加
