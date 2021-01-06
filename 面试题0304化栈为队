@@ -1,0 +1,77 @@
+实现一个MyQueue类，该类用两个栈来实现一个队列。
+
+
+示例：
+
+MyQueue queue = new MyQueue();
+
+queue.push(1);
+queue.push(2);
+queue.peek();  // 返回 1
+queue.pop();   // 返回 1
+queue.empty(); // 返回 false
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/implement-queue-using-stacks-lcci
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+代码：20210106
+class MyQueue:
+    #这个题的核心在与，必须把list看成栈处理，而不是List列表
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        #A是主栈，B是辅助栈
+        self.__listA = []
+        self.__listB = []
+
+
+    def push(self, x: int) -> None:
+        """
+        Push element x to the back of queue.
+        """
+        self.__listA.append(x)
+
+
+    def pop(self) -> int:
+        """
+        Removes the element from in front of queue and returns that element.
+        """
+        #出栈，如果你以前出栈过，那就直接pop()了
+        if self.__listB:
+            return self.__listB.pop()
+        if not self.__listA:
+            return -1
+        while self.__listA:
+            #两个栈，A出栈，B入栈,完成逆序
+            self.__listB.append(self.__listA.pop())
+        
+        return self.__listB.pop()
+
+
+    def peek(self) -> int:
+        """
+        Get the front element.
+        """
+        if not self.__listB:
+            return self.__listA[0]
+        return self.__listB[-1]
+
+
+    def empty(self) -> bool:
+        """
+        Returns whether the queue is empty.
+        """
+        return self.__listA == [] and self.__listB == []
+
+
+
+# Your MyQueue object will be instantiated and called as such:
+# obj = MyQueue()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.peek()
+# param_4 = obj.empty()
+
+小结：核心在与，两个栈，一个栈是主栈，一个栈是辅助栈，A出栈，B入栈，完成逆序，然后B的'-1'为B的栈顶，peek，
