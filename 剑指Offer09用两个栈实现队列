@@ -1,0 +1,48 @@
+用两个栈实现一个队列。队列的声明如下，请实现它的两个函数 appendTail 和 deleteHead ，分别完成在队列尾部插入整数和在队列头部删除整数的功能。(若队列中没有元素，deleteHead 操作返回 -1 )
+
+ 
+
+示例 1：
+
+输入：
+["CQueue","appendTail","deleteHead","deleteHead"]
+[[],[3],[],[]]
+输出：[null,null,3,-1]
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+代码：20210106
+class CQueue:
+
+    def __init__(self):
+        #双栈
+        self.__listA = []
+        self.__listB = []
+
+
+    def appendTail(self, value: int) -> None:
+        #入栈
+        self.__listA.append(value)
+
+
+    def deleteHead(self) -> int:
+        if self.__listB:
+            return self.__listB.pop()
+        if not self.__listA:
+            return -1
+        while self.__listA:
+            #A出栈，B入栈
+            self.__listB.append(self.__listA.pop())
+        return self.__listB.pop()
+
+
+
+# Your CQueue object will be instantiated and called as such:
+# obj = CQueue()
+# obj.appendTail(value)
+# param_2 = obj.deleteHead()
+
+小结：核心是两个栈，入栈，出栈，完成一个逆序，同时可以删除头元素
+
+
